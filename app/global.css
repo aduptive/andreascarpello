@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 ::selection {
   background-color: #47a3f3;
@@ -147,4 +149,38 @@ table {
 
 .title {
   text-wrap: balance;
+}
+
+.container,
+.container-small {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .container,
+  .container-small {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container,
+  .container-small {
+    padding-left: 0rem;
+    padding-right: 0rem;
+    margin: 0 auto;
+  }
+
+  .container {
+    width: 91.666667%;
+    max-width: 81.25rem;
+  }
+
+  .container-small {
+    width: 83.333333%;
+    max-width: 67.5rem;
+  }
 }
