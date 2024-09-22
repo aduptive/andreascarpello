@@ -1,20 +1,20 @@
-import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
-import { baseUrl } from 'app/sitemap'
+import { formatDate, getBlogPosts } from 'app/blog/utils';
+import { CustomMDX } from 'app/components/mdx';
+import { baseUrl } from 'app/sitemap';
+import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts()
+  let posts = getBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
-  }))
+  }));
 }
 
 export function generateMetadata({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+  let post = getBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
-    return
+    return;
   }
 
   let {
@@ -22,10 +22,10 @@ export function generateMetadata({ params }) {
     publishedAt: publishedTime,
     summary: description,
     image,
-  } = post.metadata
+  } = post.metadata;
   let ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+    : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
@@ -48,18 +48,18 @@ export function generateMetadata({ params }) {
       description,
       images: [ogImage],
     },
-  }
+  };
 }
 
 export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+  let post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
-    <section>
+    <section className="container">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -82,7 +82,7 @@ export default function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
+      <h1 className="title font-semibold text-[4.5rem] leading-[1.2em] tracking-tighter">
         {post.metadata.title}
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
@@ -94,5 +94,5 @@ export default function Blog({ params }) {
         <CustomMDX source={post.content} />
       </article>
     </section>
-  )
+  );
 }
